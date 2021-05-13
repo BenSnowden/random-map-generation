@@ -3,7 +3,7 @@ import numpy as np
 
 
 def make_world(dimension_of_screen):
-    scale = 1
+    scale = 0.7
     octaves = 6
     persistence = 0.5
     lacunarity = 2.0
@@ -46,14 +46,9 @@ def add_color(world, dimension_of_screen):
     mountain = [205, 216, 215]
 
     color_world = np.zeros((dimension_of_screen[1], dimension_of_screen[0]) + (3,))
-    print(world[799][999])
-    print(len(world[0]))
-    print(len(world))
-    print(len(color_world[0]))
-    print(len(color_world))
 
-    for i in range(799):
-        for j in range(999):
+    for i in range(dimension_of_screen[1]):
+        for j in range(dimension_of_screen[0]):
             if world[i][j] < -0.2:
                 color_world[i][j] = water_deep
             elif world[i][j] < -0.06:

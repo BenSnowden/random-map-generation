@@ -19,6 +19,7 @@ def run():
     init_display()
 
     Image.fromarray(image_perlin_noise, mode="L").show()
+
     Image.fromarray(image_colored, mode="RGB").show()
 
     world_pillow_image = Image.fromarray(image_colored, mode="RGB")
