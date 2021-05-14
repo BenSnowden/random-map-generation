@@ -3,29 +3,51 @@ from pygame.locals import *
 import pygame
 from time import sleep
 from PIL import Image
-import numpy as np
+
 
 dimension_of_screen = (1000, 800)
 
+"""
+dimension of map (x,y) used in map generation and setting the pygame screen size
+
+"""
+
 
 def init_display():
+
     global screen
     screen = pygame.display.set_mode(dimension_of_screen)
 
 
 def run():
-    image_colored, perlin_world, image_perlin_noise = make_world(dimension_of_screen)
+    """
+    Logic to call functions to create and display the generated map
+
+    """
+
+    mapColored, worldValues, perlinNoise = make_world(dimension_of_screen)
+    """
+    Calls make_world(dimensions) to return
+        mapColored = matrix of color values for each pixel which has been through 'add_color()'
+        worldValues = matrix of light values for perlinNoise, not used currently
+        perlinNoise = matrix that is grayscale, used to check if map generated properly visually.
+
+    """
 
     init_display()
+    Image.fromarray(perlinNoise, mode="L").show()
+    Image.fromarray(mapColored, mode="RGB").show()
 
-    Image.fromarray(image_perlin_noise, mode="L").show()
-
-    Image.fromarray(image_colored, mode="RGB").show()
-
-    world_pillow_image = Image.fromarray(image_colored, mode="RGB")
+    mapColored = Image.fromarray(mapColored, mode="RGB")
     world = pygame.image.fromstring(
-        world_pillow_image.tobytes(), world_pillow_image.size, world_pillow_image.mode
+        mapColored.tobytes(),
+        mapColored.size,
+        mapColored.mode,
     )
+    """
+    world = use pillow to load colored map into a useable pygame format without having issues
+    of distortion and an inversed x,y axis
+    """
 
     screen.blit(world, (0, 0))
     pygame.display.update()
@@ -37,7 +59,7 @@ def run():
                 loop = 0
 
         pygame.display.update()
-        sleep(1 / 30)
+        sleep(1 / 10)
 
 
 if __name__ == "__main__":

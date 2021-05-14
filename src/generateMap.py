@@ -1,8 +1,13 @@
 import noise
 import numpy as np
+from typing import Any, Tuple, List
+from numpy import typing
 
 
-def make_world(dimension_of_screen):
+def make_world(
+    dimension_of_screen: tuple((int, int))
+) -> Tuple[List[List[np.uint8]], List[List[np.float64]], List[List[np.uint8]]]:
+
     scale = 0.7
     octaves = 6
     persistence = 0.5
@@ -26,15 +31,17 @@ def make_world(dimension_of_screen):
         base=seed,
     )
 
-    img = np.floor((world + 0.5) * 255).astype(np.uint8)
+    perlinNoise = np.floor((world + 0.5) * 255).astype(np.uint8)
+    colorWorld = add_color(world, dimension_of_screen)
+    colorWorld = np.floor((colorWorld)).astype(np.uint8)
 
-    color_world = add_color(world, dimension_of_screen)
-    img_color = np.floor((color_world)).astype(np.uint8)
-
-    return img_color, world, img
+    return colorWorld, world, perlinNoise
 
 
-def add_color(world, dimension_of_screen):
+def add_color(
+    world: List[List[np.float64]], dimension_of_screen: tuple((int, int))
+) -> List[List[np.ndarray]]:
+
     water = [78, 188, 185]
     water_deep = [66, 172, 175]
     water_shallow = [159, 205, 208]
