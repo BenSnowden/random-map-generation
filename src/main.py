@@ -47,6 +47,7 @@ def run():
     """
     world = use pillow to load colored map into a useable pygame format without having issues
     of distortion and an inversed x,y axis
+    
     """
 
     screen.blit(world, (0, 0))

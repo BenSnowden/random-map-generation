@@ -1,7 +1,6 @@
 import noise
 import numpy as np
-from typing import Any, Tuple, List
-from numpy import typing
+from typing import Tuple, List
 
 
 def make_world(
